@@ -8,15 +8,15 @@ module Xinge
       super
     end
 
-    def pushToSingleAccount(account, title = "", content, params = {})
+    def pushToSingleAccount(account, title, content, params = {})
       self.push_single_account(account, 1, build_simple_message(title, content), params)
     end
 
-    def pushToSingleDevice(token, title, content, params={})
+    def pushToSingleDevice(token, title, content, params = {})
       self.push_single_device(token, 1, build_simple_message(title, content), params.merge({environment: ENV_MAP[Xinge.config[:env]]}))
     end
 
-    def pushToAllDevice(title, content, params={})
+    def pushToAllDevice(title, content, params = {})
       self.push_all_device(1, build_simple_message(title, content), params.merge({environment: ENV_MAP[Xinge.config[:env]]}))
     end
 

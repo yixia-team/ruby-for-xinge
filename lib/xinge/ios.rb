@@ -9,7 +9,7 @@ module Xinge
     end
 
     def pushToSingleAccount(account, title, content, params = {})
-      self.push_single_account(account, 1, build_simple_message(title, content), params)
+      self.push_single_account(account, 1, build_simple_message(title, content), params.merge({environment: ENV_MAP[Xinge.config[:env]]}))
     end
 
     def pushToSingleDevice(token, title, content, params = {})

@@ -23,18 +23,22 @@ module Xinge
     protected
 
     def build_simple_message(title, content, badge = 1)
-      result = {
-        aps: {
-          sound: 'default',
-          badge: badge
+      result = { aps: {} }
+      if title.empty? && content[:alert]
+        result[:aps] = {
+          sound: "default",
+          badge: badge,
+          alert: content[:alert]
         }
-      }
-      if title.empty?
-        result[:aps][:alert] = content[:alert]
-      else
-        result[:aps][:alert] = {title: title, body: content[:alert]}
+      elsif content[:alert]
+        result[:aps] = {
+          sound: "default",
+          badge: badge,
+          alert: {title: title, body: content[:alert]}
+        }
       end
       result.merge!(content[:custom_content]) unless content[:custom_content].nil?
+      result.merge!(content[:aps_custom_content]) unless content[:aps_custom_content].nil?
       result.to_json
     end
   end

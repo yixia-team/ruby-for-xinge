@@ -16,8 +16,8 @@ module Xinge
 
   class Base
     include HTTParty
-    base_uri  'http://openapi.xg.qq.com'    	
-    
+    base_uri  'http://openapi.xg.qq.com'
+
     DEFAULT_OPTIONS = {
       api_version: 'v2'
     }
@@ -140,11 +140,11 @@ module Xinge
       #sign params
       params_string = params.sort.map{ |h| h.join('=') }.join
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
-      
+
       params.merge!({ sign: sign })
       options = { body: params }
-      
-      result = JSON.parse(self.class.send(HTTP_METHOD,self.get_request_url(type,method), options))
+      result = self.class.send(HTTP_METHOD,self.get_request_url(type,method), options)
+      result = JSON.parse(result.to_s.gsub(/\\r\\n/, ''))
       [result["ret_code"], result["err_msg"]]
     end
 

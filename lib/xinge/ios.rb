@@ -36,11 +36,9 @@ module Xinge
           badge: badge,
           alert: {title: title, body: content[:alert]}
         }
-      elsif content["content-available"]
-        result[:aps] = { "content-available" => 1 }
       end
       result.merge!(content[:custom_content]) unless content[:custom_content].nil?
-      result.merge!(content[:aps_custom_content]) unless content[:aps_custom_content].nil?
+      result[:aps].merge!(content[:aps_custom_content]) unless content[:aps_custom_content].nil?
       result.to_json
     end
   end

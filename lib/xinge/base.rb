@@ -144,7 +144,12 @@ module Xinge
       params.merge!({ sign: sign })
       options = { body: params }
       result = self.class.send(HTTP_METHOD,self.get_request_url(type,method), options)
-      result = JSON.parse(result.to_s.gsub(/\\r\\n/, ''))
+      begin
+        result = JSON.parse(result.to_s.gsub(/\\r\\n/, ''))
+      rescue
+        raise Exception.new(response_body: result)
+      end
+
       [result["ret_code"], result["err_msg"]]
     end
 

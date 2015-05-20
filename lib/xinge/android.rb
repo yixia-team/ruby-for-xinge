@@ -20,9 +20,8 @@ module Xinge
     protected
 
     def build_simple_message(title, content)
-      {
-        title: title, content: content, vibrate: 1
-      }.to_json
+      content[:title] = title unless title.blank?
+      content.to_json
     end
   end
 end

@@ -147,7 +147,7 @@ module Xinge
       begin
         result = JSON.parse(result.to_s.gsub(/\\r\\n/, ''))
       rescue
-        raise Exception.new(response_body: result)
+        raise Exception.new(type: type, method: method, options: options, response_body: result)
       end
 
       [result["ret_code"], result["err_msg"]]
